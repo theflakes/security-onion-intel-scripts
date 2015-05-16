@@ -374,7 +374,7 @@ def delete_misc_intel(intel, intel_file):
 
 
 # Get user input and run correct function to add or remove intel IP
-def do_ip(header, question, single_ip, add):
+def do_ip(header, question, single_ip, ip_add):
     print("\n%s" % header)
     print("----------------------------")
     addr = raw_input("First three octets including the trailing . ? ")
@@ -390,10 +390,10 @@ def do_ip(header, question, single_ip, add):
     if start_ip < 0 or end_ip > 255 or not (re.match(IP_REGEX, addr)):
         print(hilite("\n\nInvalid IP information.", "r", True))
         return
-    if add:
+    if ip_add:
         source, desc, url, notice, if_in = get_info()
     print(hilite("\n------------RESULTS---------------", "y", True))
-    if add:
+    if ip_add:
         add_ip(addr, start_ip, end_ip, source, desc, url, notice, if_in, BRO_INTEL_FILE)
         add_ip(addr, start_ip, end_ip, source, desc, url, notice, if_in, OSSEC_IP_FILE)
     else:
@@ -403,8 +403,8 @@ def do_ip(header, question, single_ip, add):
 
 
 def main_menu():
-    cont = True
-    while cont:
+    loop = True
+    while loop:
         print("""
 
                 Intel Update:
@@ -433,56 +433,56 @@ def main_menu():
                 q. Quit
                 ##############################
                 """)
-        ans = raw_input("Choice? ")
-        if ans == "1":
+        choice = raw_input("Choice? ")
+        if choice == "1":
             do_ip("\nAdd single intel IP:", "Last octet? ", True, True)
-        elif ans == "2":
+        elif choice == "2":
             do_ip("\nAdd range of intel IPs:", "First IP in last octet? ", False, True)
-        elif ans == "3":
+        elif choice == "3":
             do_ip("\nRemove single intel IP:", "Last octet? ", True, False)
-        elif ans == "4":
+        elif choice == "4":
             do_ip("\nRemove range of intel IPs:", "First IP in last octet? ", False, False)
-        elif ans == "5":
+        elif choice == "5":
             misc_intel("add", "\nAdd URL:", "Intel::URL", BRO_INTEL_FILE)
-        elif ans == "6":
-            misc_intel("rem", "\nRemove URL:", "", BRO_INTEL_FILE)
-        elif ans == "7":
+        elif choice == "6":
+            misc_intel("rem", "\nRemove URL:", None, BRO_INTEL_FILE)
+        elif choice == "7":
             misc_intel("add", "\nAdd software:", "Intel::SOFTWARE", BRO_INTEL_FILE)
-        elif ans == "8":
-            misc_intel("rem", "\nRemove software:", "", BRO_INTEL_FILE)
-        elif ans == "9":
+        elif choice == "8":
+            misc_intel("rem", "\nRemove software:", None, BRO_INTEL_FILE)
+        elif choice == "9":
             misc_intel("add", "\nAdd Email:", "Intel::EMAIL", BRO_INTEL_FILE)
-        elif ans == "10":
-            misc_intel("rem", "\nRemove Email:", "", BRO_INTEL_FILE)
-        elif ans == "11":
+        elif choice == "10":
+            misc_intel("rem", "\nRemove Email:", None, BRO_INTEL_FILE)
+        elif choice == "11":
             intel = misc_intel("add", "\nAdd domain:", "Intel::DOMAIN", BRO_INTEL_FILE)
-            add_misc_intel("", intel, OSSEC_DNS_FILE, "", "", "", "", "")
+            add_misc_intel("", intel, OSSEC_DNS_FILE, None, None, None, None, None)
             call(OSSEC_MAKELISTS)
-        elif ans == "12":
-            intel = misc_intel("rem", "\nRemove domain:", "", BRO_INTEL_FILE)
+        elif choice == "12":
+            intel = misc_intel("rem", "\nRemove domain:", None, BRO_INTEL_FILE)
             delete_misc_intel(intel, OSSEC_DNS_FILE)
             call(OSSEC_MAKELISTS)
-        elif ans == "13":
+        elif choice == "13":
             intel = misc_intel("add", "\nAdd username:", "Intel::USER_NAME", BRO_INTEL_FILE)
-            add_misc_intel("", intel, OSSEC_USERS_FILE, "", "", "", "", "")
+            add_misc_intel("", intel, OSSEC_USERS_FILE, None, None, None, None, None)
             call(OSSEC_MAKELISTS)
-        elif ans == "14":
-            intel = misc_intel("rem", "\nRemove username:", "", BRO_INTEL_FILE)
+        elif choice == "14":
+            intel = misc_intel("rem", "\nRemove username:", None, BRO_INTEL_FILE)
             delete_misc_intel(intel, OSSEC_USERS_FILE)
             call(OSSEC_MAKELISTS)
-        elif ans == "15":
+        elif choice == "15":
             misc_intel("add", "\nAdd file hash:", "Intel::FILE_HASH", BRO_INTEL_FILE)
-        elif ans == "16":
-            misc_intel("rem", "\nRemove file hash:", "", BRO_INTEL_FILE)
-        elif ans == "17":
+        elif choice == "16":
+            misc_intel("rem", "\nRemove file hash:", None, BRO_INTEL_FILE)
+        elif choice == "17":
             misc_intel("add", "\nAdd file name:", "Intel::FILE_NAME", BRO_INTEL_FILE)
-        elif ans == "18":
-            misc_intel("rem", "\nRemove file name:", "", BRO_INTEL_FILE)
-        elif ans == "19":
+        elif choice == "18":
+            misc_intel("rem", "\nRemove file name:", None, BRO_INTEL_FILE)
+        elif choice == "19":
             misc_intel("add", "\nAdd Cert hash:", "Intel::CERT_HASH", BRO_INTEL_FILE)
-        elif ans == "20":
-            misc_intel("rem", "\nRemove Cert hash:", "", BRO_INTEL_FILE)
-        elif ans == "q":
+        elif choice == "20":
+            misc_intel("rem", "\nRemove Cert hash:", None, BRO_INTEL_FILE)
+        elif choice == "q":
             exit(0)
         else:
             print(hilite("\nInvalid input!", "r", True))
