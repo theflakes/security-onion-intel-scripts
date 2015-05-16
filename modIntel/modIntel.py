@@ -540,7 +540,7 @@ def main():
     if not os.access(BACKUP_DIR, os.W_OK):
         print(hilite("\n%s is not writeable or does not exist!\nPlease check your configuration.\n", "r", True) % BACKUP_DIR)
         exit(4)
-    check_files = {BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_USERS_FILE}
+    check_files = BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_USERS_FILE
     for check in check_files:
         exists_and_writable(check)
         remove_duplicate_lines(check)
