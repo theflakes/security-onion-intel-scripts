@@ -527,7 +527,7 @@ def main():
     # regex to match first three octets of IP including trailing "."
     global IP_REGEX, BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_MAKELISTS, OSSEC_USERS_FILE, BACKUP_DIR
     IP_REGEX = re.compile("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.$")
-    # tuple of file to check for exist, write access, and duplicate lines
+    # tuple of files to check for exist, write access, and duplicate lines
     check_files = BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_USERS_FILE
     # globals to hold Bro and OSSEC intel file locations
     # read in configs
