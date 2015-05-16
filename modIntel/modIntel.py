@@ -117,7 +117,7 @@ def ossec_collapse_full_nets(addr, source, intel_file):
                 count += 1
     if count > 255:
         delete_ip(addr, 0, 255, intel_file)
-        add_ip(addr, 0, 255, source, "", "", "", "", OSSEC_IP_FILE)
+        add_ip(addr, 0, 255, source, None, None, None, None, OSSEC_IP_FILE)
 
 
 # add IP(s) to intel file
@@ -210,10 +210,10 @@ def delete_ip(addr, start_ip, end_ip, intel_file):
         else:
             start = 0
             end = start_ip - 1
-            add_ip(addr, start, end, source, "", "", "", "", OSSEC_IP_FILE)
+            add_ip(addr, start, end, source, None, None, None, None, OSSEC_IP_FILE)
             start = end_ip + 1
             end = 255
-        add_ip(addr, start, end, source, "", "", "", "", OSSEC_IP_FILE)
+        add_ip(addr, start, end, source, None, None, None, None, OSSEC_IP_FILE)
 
 
 # choose where Bro is to look for the intel
@@ -327,9 +327,9 @@ def misc_intel(op, header, type, intel_file):
     print("\n%s" % header)
     print("----------------------------")
     intel = raw_input("Intel? ")
-    source, desc, url, notice, ifIn = get_info()
+    source, desc, url, notice, if_in = get_info()
     if op == "add":
-        add_misc_intel(type, intel, intel_file, source, desc, url, notice, ifIn)
+        add_misc_intel(type, intel, intel_file, source, desc, url, notice, if_in)
     else:
         delete_misc_intel(intel, intel_file)
     return intel
@@ -456,7 +456,7 @@ def main_menu():
             misc_intel("rem", "\nRemove Email:", None, BRO_INTEL_FILE)
         elif choice == "11":
             intel = misc_intel("add", "\nAdd domain:", "Intel::DOMAIN", BRO_INTEL_FILE)
-            add_misc_intel("", intel, OSSEC_DNS_FILE, None, None, None, None, None)
+            add_misc_intel(None, intel, OSSEC_DNS_FILE, None, None, None, None, None)
             call(OSSEC_MAKELISTS)
         elif choice == "12":
             intel = misc_intel("rem", "\nRemove domain:", None, BRO_INTEL_FILE)
@@ -464,7 +464,7 @@ def main_menu():
             call(OSSEC_MAKELISTS)
         elif choice == "13":
             intel = misc_intel("add", "\nAdd username:", "Intel::USER_NAME", BRO_INTEL_FILE)
-            add_misc_intel("", intel, OSSEC_USERS_FILE, None, None, None, None, None)
+            add_misc_intel(None, intel, OSSEC_USERS_FILE, None, None, None, None, None)
             call(OSSEC_MAKELISTS)
         elif choice == "14":
             intel = misc_intel("rem", "\nRemove username:", None, BRO_INTEL_FILE)
