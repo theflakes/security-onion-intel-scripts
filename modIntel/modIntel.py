@@ -529,8 +529,6 @@ def main():
     global IP_REGEX, BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_MAKELISTS, OSSEC_USERS_FILE, BACKUP_DIR
     # regex to match first three octets of IP including trailing "."
     IP_REGEX = re.compile("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.$")
-    # tuple of files to check for exist, write access, and duplicate lines
-    check_files = BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_USERS_FILE
     # read in configs
     config = ConfigParser.ConfigParser()
     config.readfp(open(r'modIntel.conf'))
@@ -543,6 +541,8 @@ def main():
     if not os.access(BACKUP_DIR, os.W_OK):
         print(hilite("\n%s is not writeable or does not exist!\nPlease check your configuration.\n", "r", True) % BACKUP_DIR)
         exit(4)
+    # tuple of files to check for exist, write access, and duplicate lines
+    check_files = BRO_INTEL_FILE, OSSEC_IP_FILE, OSSEC_DNS_FILE, OSSEC_USERS_FILE
     for check in check_files:
         exists_and_writable(check)
         remove_duplicate_lines(check)
